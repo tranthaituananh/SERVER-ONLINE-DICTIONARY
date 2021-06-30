@@ -12,11 +12,9 @@ namespace Server
 {
     public partial class Server : Form
     {
-        IPEndPoint ipendpoint;
         Socket client;
-        TcpListener tcplistener;
-        string input;
         string output;
+        int wordCount = 1;
 
         public Server()
         {
@@ -30,27 +28,21 @@ namespace Server
         {
             try
             {
-                //tạo 1 IP Endpoint mới
-                ipendpoint = new IPEndPoint(IPAddress.Any, 9999);
-                tcplistener = new TcpListener(ipendpoint);
-
-                //tạo thread mới để nhận dữ liệu 
-                //sử dụng arrow function để invok hàm chỉ khi ấn button, nếu không nó sẽ thành IIFE 
+                IPEndPoint ipEndpoint = new IPEndPoint(IPAddress.Any, 9999);
+                TcpListener tcpListener = new TcpListener(ipEndpoint);
                 Thread thread = new Thread(() =>
                 {
                     while (true)
                     {
-                        tcplistener.Start();
-                        client = tcplistener.AcceptSocket();
-                        Thread rec = new Thread(ReceiveData);
-                        rec.IsBackground = true;
-                        rec.Start(client);
+                        tcpListener.Start();
+                        client = tcpListener.AcceptSocket();
+                        Thread receiveData = new Thread(ReceiveData);
+                        receiveData.IsBackground = true;
+                        receiveData.Start(client);
                     }
                 });
-
                 thread.IsBackground = true;
                 thread.Start();
-                //nếu kết nối thành công thì hiển thị ra cho user
                 MessageBox.Show("Successfully Connected !");
 
             }
@@ -64,43 +56,36 @@ namespace Server
         {
             try
             {
-                //mã hóa chuỗi thành các byte để gửi 
-                byte[] outputByte = Encoding.UTF8.GetBytes(output);
-                client.Send(outputByte);
-
-                //làm trống output, sẵn sàng nhận dữ liệu tiếp theo từ user 
+                byte[] data = Encoding.UTF8.GetBytes(output);
+                client.Send(data);
                 output = null;
             }
             catch
             {
-                //nếu không nhận được gì => đã đứt kết nối
-                MessageBox.Show("Word not found in database !");
+                byte[] data = Encoding.UTF8.GetBytes("Not found !");
+                client.Send(data);
             }
         }
 
-        void ReceiveData(Object obj)
+        void ReceiveData(Object sender)
         {
             try
             {
                 while (true)
                 {
-                    //nhận dữ liệu từ người dùng ở dạng byte
-                    Socket client = obj as Socket;
-                    byte[] clientMsg = new byte[1024];
-                    client.Receive(clientMsg);
-
-                    //mã hóa nó thành chuỗi
-                    input = Encoding.UTF8.GetString(clientMsg);
-
-                    //hiển thị vào danh sách đã nhận và màn hình trạng thái 
+                    Socket client = sender as Socket;
+                    byte[] data = new byte[1024];
+                    client.Receive(data);
+                    string input = Encoding.UTF8.GetString(data); 
                     tbReceived.Text = input;
-                    lvSearchHistory.Items.Add(input);
+                    lvSearchHistory.Items.Add(wordCount + ". " + input);
+                    wordCount++;
                     backgroundWork.RunWorkerAsync();
                 }
             }
             catch
             {
-                MessageBox.Show("No signal, please try again");
+                MessageBox.Show("No data received from client. Please try again !");
             }
         }
 
@@ -111,37 +96,25 @@ namespace Server
 
         private void backgroundWork_DoWork(object sender, DoWorkEventArgs e)
         {
-            //thiết lập connection mới cho mySQL 
-            MySql.Data.MySqlClient.MySqlConnection dbConn = new MySql.Data.MySqlClient.MySqlConnection("Persist Security Info=False;server=localhost;database=dictionarydb;uid=root;password=123456");
-            MySqlCommand cmd = dbConn.CreateCommand();
-
-            //thiết lập câu lệnh truy vấn từ database 
+            MySql.Data.MySqlClient.MySqlConnection dictionarydb = new MySql.Data.MySqlClient.MySqlConnection("Persist Security Info=False;server=localhost;database=dictionarydb;uid=root;password=123456");
+            MySqlCommand cmd = dictionarydb.CreateCommand();
             cmd.CommandText = "SELECT * from tbl_edict WHERE word='" + tbReceived.Text + "'";
             cmd.CommandType = CommandType.Text;
-
-            // thử mở database 
             try
             {
-                dbConn.Open();
+                dictionarydb.Open();
             }
-            catch (Exception err)
+            catch
             {
-                MessageBox.Show("Cann't open database. Error: " + err);
-                this.Close();
+                MessageBox.Show("Cann't open your database !");
             }
-
-            //đọc database và thực hiện truy vấn 
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
-                //bỏ đi thành phần đầu và thứ 2, đọc từ vị trí thứ 3, vì 2 vị trí đầu là từ cần tìm, dữ liệu thừa 
-                output += reader[2].ToString() + "\n";
+                output = output + reader[2].ToString() + "\n";
                 break;
             }
-
-
-            //đóng database 
-            dbConn.Close();
+            dictionarydb.Close();
         }
 
         private void backgroundWork_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -151,9 +124,12 @@ namespace Server
 
         private void backgroundWork_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            //hiển thị sau khi tìm kiếm hoàn tất 
-            //gửi đi cho client 
-            rtbResult.Text = "STATUS: DONE \n" + output;
+            rtbResult.Clear();
+            if (output == null)
+            {
+                output = "Not found !";
+            }
+            rtbResult.Text = output;
             SendData(client);
         }
     }

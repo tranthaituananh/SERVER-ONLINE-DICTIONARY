@@ -57,10 +57,11 @@ namespace Server
             // lvSearchHistory
             // 
             this.lvSearchHistory.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvSearchHistory.Enabled = false;
             this.lvSearchHistory.Font = new System.Drawing.Font("Segoe UI Semibold", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lvSearchHistory.ForeColor = System.Drawing.SystemColors.ScrollBar;
             this.lvSearchHistory.HideSelection = false;
-            this.lvSearchHistory.Location = new System.Drawing.Point(336, 151);
+            this.lvSearchHistory.Location = new System.Drawing.Point(865, 151);
             this.lvSearchHistory.Margin = new System.Windows.Forms.Padding(6, 9, 6, 9);
             this.lvSearchHistory.Name = "lvSearchHistory";
             this.lvSearchHistory.Size = new System.Drawing.Size(289, 391);
@@ -72,7 +73,7 @@ namespace Server
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(830, 83);
+            this.label3.Location = new System.Drawing.Point(518, 83);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(123, 44);
             this.label3.TabIndex = 13;
@@ -80,7 +81,7 @@ namespace Server
             // 
             // rtbResult
             // 
-            this.rtbResult.Location = new System.Drawing.Point(655, 151);
+            this.rtbResult.Location = new System.Drawing.Point(343, 151);
             this.rtbResult.Name = "rtbResult";
             this.rtbResult.Size = new System.Drawing.Size(483, 391);
             this.rtbResult.TabIndex = 12;
@@ -98,6 +99,7 @@ namespace Server
             // 
             // tbReceived
             // 
+            this.tbReceived.Enabled = false;
             this.tbReceived.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.tbReceived.Location = new System.Drawing.Point(37, 151);
             this.tbReceived.Multiline = true;
@@ -137,7 +139,7 @@ namespace Server
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft YaHei", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(351, 83);
+            this.label5.Location = new System.Drawing.Point(880, 83);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(256, 44);
             this.label5.TabIndex = 41;

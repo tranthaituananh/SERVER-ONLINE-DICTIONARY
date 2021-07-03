@@ -85,7 +85,7 @@ namespace Server
             }
             catch
             {
-                MessageBox.Show("No data received from client. Please try again !");
+                MessageBox.Show("Client hasn't no response. Please try again !");
             }
         }
 
@@ -96,7 +96,7 @@ namespace Server
 
         private void backgroundWork_DoWork(object sender, DoWorkEventArgs e)
         {
-            MySql.Data.MySqlClient.MySqlConnection dictionarydb = new MySql.Data.MySqlClient.MySqlConnection("Persist Security Info=False;server=localhost;database=dictionarydb;uid=root;password=123456");
+            MySql.Data.MySqlClient.MySqlConnection dictionarydb = new MySql.Data.MySqlClient.MySqlConnection("Persist Security Info=False;server=localhost;database = " + tbDatabase.Text + ";uid=" + tbUid.Text + ";password=" + tbPassword.Text);
             MySqlCommand cmd = dictionarydb.CreateCommand();
             cmd.CommandText = "SELECT * from tbl_edict WHERE word='" + tbReceived.Text + "'";
             cmd.CommandType = CommandType.Text;
@@ -106,7 +106,7 @@ namespace Server
             }
             catch
             {
-                MessageBox.Show("Cann't open your database !");
+                MessageBox.Show("Can't open your database !");
             }
             MySqlDataReader reader = cmd.ExecuteReader();
             while (reader.Read())

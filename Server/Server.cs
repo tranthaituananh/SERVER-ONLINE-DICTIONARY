@@ -16,9 +16,9 @@ namespace Server
         string input;
         string output;
         int wordCount = 1;
-        char signalAdd = ':';
-        char signalUpdate = '+';
-        char signalDel = '-';
+        char signalAdd = '$';
+        char signalUpdate = '%';
+        char signalDel = '#';
         string word;
         string mean;
 
@@ -88,19 +88,19 @@ namespace Server
                     {
                         string[] arr = input.Split(signalAdd);
                         word = arr[0];
-                        mean = arr[1];
+                        mean = "<C><F><I><N><Q><br />-" + arr[1] + "</Q></N></I></F></C>";
                     }
                     else if (check == 2)
                     {
                         string[] arr = input.Split(signalUpdate);
                         word = arr[0];
-                        mean = arr[1];
+                        mean = "<C><F><I><N><Q><br />-" + arr[1] + "</Q></N></I></F></C>";
                     }
                     else if (check == 3)
                     {
                         string[] arr = input.Split(signalDel);
                         word = arr[0];
-                        mean = arr[1];
+                        mean = "<C><F><I><N><Q><br />-" + arr[1] + "</Q></N></I></F></C>";
                     }
                     tbReceived.Text = input;
                     lvHistory.Items.Add(wordCount + ". " + input);

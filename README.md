@@ -1,5 +1,4 @@
 # SERVER - ONLINE DICTIONARY
-***
 
 ## 1. Giới thiệu   
     Đây là đồ án cuối kỳ môn Lập trình mạng căn bản (NT106)  

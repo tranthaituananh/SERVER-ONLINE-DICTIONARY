@@ -12,8 +12,8 @@ The program supports the client in translating the meaning of any English word i
 - Pronounce English words entered.
 - Display the history of searched words.
 ## 3. Authors
-    Course Instructor: Mr. Tran Ba Nhiem
-    Students:
-    - Tran Thai Tuan Anh (19521219)
-    - Pham Mai Dung (19520477)
-    - Nguyen Quang Huy (19520600)
+Course Instructor: **Mr. Tran Ba Nhiem**  
+Students:
+- Tran Thai Tuan Anh (19521219)  
+- Pham Mai Dung (19520477)  
+- Nguyen Quang Huy (19520600)  

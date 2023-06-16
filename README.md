@@ -1,20 +1,19 @@
 # SERVER - ONLINE DICTIONARY
 
-## 1. Giới thiệu   
-    Đây là đồ án cuối kỳ môn Lập trình mạng căn bản (NT106)  
-    Chương trình hỗ trợ Client dịch nghĩa của 1 từ tiếng Anh bất kỳ qua tiếng Việt
+## 1. Introduction
+This is the final project for the Basic Network Programming course (NT106).
+The program supports the client in translating the meaning of any English word into Vietnamese.
 
-## 2. Mô tả tính năng  
-    Dịch nghĩa từ tiếng Anh sang tiếng Việt  
-    Thêm từ mới vào database  
-    Chỉnh sửa từ hiện có trong database  
-    Xoá từ hiện có ra khỏi database  
-    Phát âm từ tiếng Anh được nhập vào  
-    Hiển thị lịch sử từ đã tra cứu  
-
-## 3. Tác giả   
-    GVDH: Th.S Trần Bá Nhiệm
-    Sinh viên thực hiện:
-    - Trần Thái Tuấn Anh (19521219)  
-    - Phạm Mai Dung (19520477)  
-    - Nguyễn Quang Huy (19520600)  
+## 2. Feature Description
+- Translate English words into Vietnamese.
+- Add new words to the database.
+- Edit existing words in the database.
+- Delete existing words from the database.
+- Pronounce English words entered.
+- Display the history of searched words.
+## 3. Authors
+    Course Instructor: Mr. Tran Ba Nhiem
+    Students:
+    - Tran Thai Tuan Anh (19521219)
+    - Pham Mai Dung (19520477)
+    - Nguyen Quang Huy (19520600)
